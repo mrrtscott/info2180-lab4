@@ -1,120 +1,51 @@
 window.onload = function() {
-    var board = document.getElementById("board");
-    var btn = document.getElementsByClassName("btn")[0];
-    var children = board.children;
-    var flag = true;
-    var gameState = ["", "", "", "", "", "", "", "", ""];
+    var n = document.getElementById("board"),
+        t = document.getElementsByClassName("btn")[0],
+        e = n.children,
+        o = !0,
+        s = ["", "", "", "", "", "", "", "", ""];
+    for (let n = 0; n < e.length; n++) e[n].classList.add("square"), e[n].onclick = function() {
+        i(e[n], n)
+    }, e[n].onmouseover = function() {
+        e[n].classList.add("hover")
+    }, e[n].onmouseout = function() {
+        e[n].classList.remove("hover")
+    };
 
-
-
-    for (let i = 0; i < children.length; i++) {
-        children[i].classList.add("square");
-        children[i].onclick = function() { whenClicked(children[i], i) };
-        children[i].onmouseover = function() { whenMouseIsOver(children[i]) };
-        children[i].onmouseout = function() { whenMouseIsNotOver(children[i]) };
-    }
-
-    btn.onclick = function() { newGame() };
-
-    function whenClicked(child, index) {
-        if (gameState[index] === "") {
-
-            if (flag === true) {
-                child.innerHTML = "X";
-                child.classList.add("X");
-                gameState[index] = "X";
-                flag = false;
-                if (checkWinnerX()) {
-                    document.getElementById("status").innerHTML = "Congratulations! X is the Winner!";
-                    document.getElementById("status").classList.add("you-won");
-                    for (let i = 0; i < children.length; i++) {
-                        children[i].onclick = function() {};
-                    }
+    function i(n, t) {
+        if ("" === s[t])
+            if (!0 === o) {
+                if (n.innerHTML = "X", n.classList.add("X"), s[t] = "X", o = !1, function() {
+                        for (let n = 0; n < 3; n++)
+                            if ("X" === s[n] && "X" === s[n + 3] && "X" === s[n + 6]) return !0;
+                        for (let n = 0; n < 7; n += 3)
+                            if ("X" === s[n] && "X" === s[n + 1] && "X" === s[n + 2]) return !0;
+                        if ("X" === s[0] && "X" === s[4] && "X" === s[8]) return !0;
+                        if ("X" === s[2] && "X" === s[4] && "X" === s[6]) return !0;
+                        return !1
+                    }()) {
+                    document.getElementById("status").innerHTML = "Congratulations! X is the Winner!", document.getElementById("status").classList.add("you-won");
+                    for (let n = 0; n < e.length; n++) e[n].onclick = function() {}
                 }
-            } else if (flag == false) {
-                child.innerHTML = "O";
-                child.classList.add("O");
-                gameState[index] = "O";
-                flag = true;
-                if (checkWinnerO()) {
-                    document.getElementById("status").innerHTML = "Congratulations! O is the Winner!";
-                    document.getElementById("status").classList.add("you-won");
-                    for (let i = 0; i < children.length; i++) {
-                        children[i].onclick = function() {};
-                    }
-                }
-            }
-
+            } else if (0 == o && (n.innerHTML = "O", n.classList.add("O"), s[t] = "O", o = !0, function() {
+                for (let n = 0; n < 3; n++)
+                    if ("O" === s[n] && "O" === s[n + 3] && "O" === s[n + 6]) return !0;
+                for (let n = 0; n < 7; n += 3)
+                    if ("O" === s[n] && "O" === s[n + 1] && "O" === s[n + 2]) return !0;
+                if ("O" === s[0] && "O" === s[4] && "O" === s[8]) return !0;
+                if ("O" === s[2] && "O" === s[4] && "O" === s[6]) return !0;
+                return !1
+            }())) {
+            document.getElementById("status").innerHTML = "Congratulations! O is the Winner!", document.getElementById("status").classList.add("you-won");
+            for (let n = 0; n < e.length; n++) e[n].onclick = function() {}
         }
-
     }
-
-    function whenMouseIsOver(child) {
-        child.classList.add("hover");
+    t.onclick = function() {
+        ! function() {
+            for (let n = 0; n < e.length; n++) e[n].innerHTML = "", e[n].classList.remove("X"), e[n].classList.remove("O"), e[n].onclick = function() {
+                i(e[n], n)
+            }, s[n] = "";
+            document.getElementById("status").innerHTML = "Move your mouse over a square and click to play an X or an O.", document.getElementById("status").classList.remove("you-won")
+        }()
     }
-
-    function whenMouseIsNotOver(child) {
-        child.classList.remove("hover");
-    }
-
-    function checkWinnerX() {
-        for (let i = 0; i < 3; i++) {
-            if (gameState[i] === "X" && gameState[i + 3] === "X" && gameState[i + 6] === "X") {
-                return true;
-            }
-        }
-
-        for (let i = 0; i < 7; i += 3) {
-            if (gameState[i] === "X" && gameState[i + 1] === "X" && gameState[i + 2] === "X") {
-                return true;
-            }
-        }
-
-        if (gameState[0] === "X" && gameState[4] === "X" && gameState[8] === "X") {
-            return true;
-        } else if (gameState[2] === "X" && gameState[4] === "X" && gameState[6] === "X") {
-            return true;
-        }
-
-        return false;
-
-    }
-
-    function checkWinnerO() {
-        for (let i = 0; i < 3; i++) {
-            if (gameState[i] === "O" && gameState[i + 3] === "O" && gameState[i + 6] === "O") {
-                return true;
-            }
-        }
-
-        for (let i = 0; i < 7; i += 3) {
-            if (gameState[i] === "O" && gameState[i + 1] === "O" && gameState[i + 2] === "O") {
-                return true;
-            }
-        }
-
-        if (gameState[0] === "O" && gameState[4] === "O" && gameState[8] === "O") {
-            return true;
-        } else if (gameState[2] === "O" && gameState[4] === "O" && gameState[6] === "O") {
-            return true;
-        }
-
-        return false;
-    }
-
-    function newGame() {
-
-        for (let i = 0; i < children.length; i++) {
-            children[i].innerHTML = "";
-            children[i].classList.remove("X");
-            children[i].classList.remove("O");
-            children[i].onclick = function() { whenClicked(children[i], i) };
-            gameState[i] = "";
-        }
-        document.getElementById("status").innerHTML = "Move your mouse over a square and click to play an X or an O.";
-        document.getElementById("status").classList.remove("you-won");
-    }
-
-
-
 };
