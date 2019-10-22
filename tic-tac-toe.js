@@ -51,7 +51,71 @@ window.onload = function() {
 
     }
 
+    function whenMouseIsOver(child) {
+        child.classList.add("hover");
+    }
 
+    function whenMouseIsNotOver(child) {
+        child.classList.remove("hover");
+    }
+
+    function checkWinnerX() {
+        for (let i = 0; i < 3; i++) {
+            if (system_Status[i] === "X" && system_Status[i + 3] === "X" && system_Status[i + 6] === "X") {
+                return true;
+            }
+        }
+
+        for (let i = 0; i < 7; i += 3) {
+            if (system_Status[i] === "X" && system_Status[i + 1] === "X" && system_Status[i + 2] === "X") {
+                return true;
+            }
+        }
+
+        if (system_Status[0] === "X" && system_Status[4] === "X" && system_Status[8] === "X") {
+            return true;
+        } else if (system_Status[2] === "X" && system_Status[4] === "X" && system_Status[6] === "X") {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    function checkWinnerO() {
+        for (let i = 0; i < 3; i++) {
+            if (system_Status[i] === "O" && system_Status[i + 3] === "O" && system_Status[i + 6] === "O") {
+                return true;
+            }
+        }
+
+        for (let i = 0; i < 7; i += 3) {
+            if (system_Status[i] === "O" && system_Status[i + 1] === "O" && system_Status[i + 2] === "O") {
+                return true;
+            }
+        }
+
+        if (system_Status[0] === "O" && system_Status[4] === "O" && system_Status[8] === "O") {
+            return true;
+        } else if (system_Status[2] === "O" && system_Status[4] === "O" && system_Status[6] === "O") {
+            return true;
+        }
+
+        return false;
+    }
+
+    function newGame() {
+
+        for (let i = 0; i < system_sub.length; i++) {
+            system_sub[i].innerHTML = "";
+            system_sub[i].classList.remove("X");
+            system_sub[i].classList.remove("O");
+            system_sub[i].onclick = function() { whenClicked(system_sub[i], i) };
+            system_Status[i] = "";
+        }
+        document.getElementById("status").innerHTML = "Move your mouse over a square and click to play an X or an O.";
+        document.getElementById("status").classList.remove("you-won");
+    }
 
 
 
